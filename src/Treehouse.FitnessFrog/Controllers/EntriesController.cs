@@ -55,7 +55,6 @@ namespace Treehouse.FitnessFrog.Controllers
         [HttpPost]
         public ActionResult Add(Entry entry)
         {
-
             if (ModelState.IsValid)
             {
                 _entriesRepository.AddEntry(entry);

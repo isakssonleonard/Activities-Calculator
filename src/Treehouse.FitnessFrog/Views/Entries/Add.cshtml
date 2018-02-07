@@ -1,14 +1,8 @@
 ﻿@model Treehouse.FitnessFrog.Models.Entry
-
+@using Treehouse.FitnessFrog.Models
 
 @{
     ViewBag.Title = "Add Entry";
-
-    var selectListItems = new[]
-    {
-        new SelectListItem() { Value = "1", Text = "Item 1", Selected = false },
-        new SelectListItem() { Value = "2", Text = "Item 2", Selected = true },
-    };
 }
  
 <h2>@ViewBag.Title</h2>
@@ -37,12 +31,22 @@
 
             <div class="form-group">
                 @Html.LabelFor(m => m.Intensity, new { @class = "control-label" })
-                @Html.TextBoxFor(m => m.Intensity, null, new { @class = "form-control" })
+                <div>
+                    @foreach (var intensity in Enum.GetValues(typeof(Entry.IntensityLevel)))
+                    {
+                        <label class="radio-inline">
+                            @Html.RadioButtonFor(m => m.Intensity, intensity) @intensity
+                        </label>
+                    }
+                </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(m => m.Exclude, new { @class = "control-label" })
-                @Html.TextBoxFor(m => m.Exclude, null, new { @class = "form-control" })
+                <div class="checkbox">
+                    <label>
+                        @Html.CheckBoxFor(m => m.Exclude) @Html.DisplayNameFor(m => m.Exclude)
+                    </label>
+                </div>
             </div>
 
         </div>
