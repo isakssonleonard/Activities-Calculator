@@ -74,6 +74,8 @@ namespace Treehouse.FitnessFrog.Models
         /// <summary>
         /// The duration for the entry (in minutes).
         /// </summary>
+
+        [Range(1, 1000, ErrorMessage = "Duration must be greater than 0")]
         public double Duration { get; set; }
 
         /// <summary>
