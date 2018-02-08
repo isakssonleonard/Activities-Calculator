@@ -69,6 +69,7 @@ namespace Treehouse.FitnessFrog.Models
         /// <summary>
         /// The activity for the entry.
         /// </summary>
+        [Required(ErrorMessage = "Activity is required")]
         public Activity Activity { get; set; }
 
         /// <summary>
