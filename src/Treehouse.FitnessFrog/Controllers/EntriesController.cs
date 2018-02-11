@@ -46,8 +46,7 @@ namespace Treehouse.FitnessFrog.Controllers
                 Date = DateTime.Today
             };
 
-            ViewBag.ActivitiesSelectedItems = new SelectList(
-                Data.Data.Activities, "Id", "Name");
+            SetupActivities();
 
             return View(entry);
         }
@@ -62,8 +61,7 @@ namespace Treehouse.FitnessFrog.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ActivitiesSelectedItems = new SelectList(
-             Data.Data.Activities, "Id", "Name");
+            SetupActivities();
 
             return View(entry);
         }
@@ -75,7 +73,31 @@ namespace Treehouse.FitnessFrog.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            return View();
+            var entry = _entriesRepository.GetEntry(id.Value);
+
+            if (entry == null)
+            {
+                return HttpNotFound();
+            }
+
+            SetupActivities();
+
+            return View(entry);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(Entry entry)
+        {
+            if (ModelState.IsValid)
+            {
+                _entriesRepository.UpdateEntry(entry);
+
+                return RedirectToAction("Index");
+            }
+
+            SetupActivities();
+
+            return View(entry);
         }
 
         public ActionResult Delete(int? id)
@@ -86,6 +108,12 @@ namespace Treehouse.FitnessFrog.Controllers
             }
 
             return View();
+        }
+
+        private void SetupActivities()
+        {
+            ViewBag.ActivitiesSelectedItems = new SelectList(
+                Data.Data.Activities, "Id", "Name");
         }
     }
 }
